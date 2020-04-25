@@ -11,16 +11,6 @@ export EDITOR=vim
 
 xrdb -merge ~/.Xresources
 
-#while true; do
-# DISK=$(diskfree)
-# CPU=$(cpu)
-# LOCALTIME=$(timeos)
-# MEM=$(mem)
-
-# xsetroot -name "$DISK | $MEM | $CPU | $LOCALTIME"
-# sleep 1s
-#done &
-
 #exec feh --bg-fill /media/hdd2/pics/wallhaven-oxe8op.jpg &
 #exec dwm
 
