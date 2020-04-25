@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =9
+let g:netrw_dirhist_9='/home/sceptrr/programming/webdev/ytd-client/src/containers/towers'
+let g:netrw_dirhist_8='/home/sceptrr/programming/webdev/ytd-client/src/containers'
+let g:netrw_dirhist_7='/home/sceptrr/programming/webdev/ytd-client/src/containers/towers'
+let g:netrw_dirhist_6='/home/sceptrr/programming/webdev/ytd-client/src/components/site-header'
+let g:netrw_dirhist_5='/home/sceptrr'
+let g:netrw_dirhist_4='/home/sceptrr/programming'
+let g:netrw_dirhist_3='/home/sceptrr/programming/webdev'
+let g:netrw_dirhist_2='/home/sceptrr/programming/webdev/ytd-client'
+let g:netrw_dirhist_1='/home/sceptrr/programming/webdev/ytd-client/src'
+let g:netrw_dirhist_0='/home/sceptrr/programming/webdev/ytd-client/src/containers'
