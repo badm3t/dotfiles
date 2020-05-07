@@ -6,9 +6,9 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rails'
 Plug 'lilydjwg/colorizer'
 " file finder
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'vim-ruby/vim-ruby'
 Plug 'ajh17/spacegray.vim'
+Plug 'wincent/command-t'
 Plug 'Shougo/deoplete.nvim'
 
 call plug#end()
@@ -78,10 +78,11 @@ set updatetime=200
 "   menu: use a popup menu
 "   preview: show more info in menu
 set completeopt=menu,preview
+let mapleader=","
 
-let g:ctrlp_working_path_mode = 'ra'
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip
-let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+"let g:ctrlp_working_path_mode = 'ra'
+"set wildignore+=*/tmp/*,*.so,*.swp,*.zip
+"let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 
 
 "set statusline=%<%f\ (%{&ft})\ %-4(%m%)%=%-19(%3l,%02c%03V%)
@@ -110,16 +111,21 @@ let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 "         end
 :let g:ruby_indent_assignment_style = 'variable'
 
-
-
-
-
-
-
-
-
 autocmd FileType ruby setlocal expandtab shiftwidth=2 tabstop=2
 autocmd FileType eruby setlocal expandtab shiftwidth=2 tabstop=2
+
+""""""""""""""""""""""""""""""""""""""""""""""""""
+" Command-t remap
+""""""""""""""""""""""""""""""""""""""""""""""""""
+if &term =~ "xterm" || &term =~ "screen"
+  let g:CommandTCancelMap = ['<ESC>', '<C-c>']
+endif
+
+""""""""""""""""""""""""""""""""""""""""""""""""""
+" Misc key maps
+""""""""""""""""""""""""""""""""""""""""""""""""""
+inoremap <c-c> <esc>
+nnoremap <leader><space> :nohlsearch<cr>
 
 " Fast split navigation with <Ctrl> + hjkl
 :noremap <c-l> <c-w><c-l>
