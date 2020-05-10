@@ -28,6 +28,7 @@ set history=10000
 
 filetype on
 
+let mapleader=","
 set number
 set encoding=utf-8
 set tabstop=2
@@ -78,10 +79,9 @@ set updatetime=200
 "   menu: use a popup menu
 "   preview: show more info in menu
 set completeopt=menu,preview
-let mapleader=","
 
 "let g:ctrlp_working_path_mode = 'ra'
-"set wildignore+=*/tmp/*,*.so,*.swp,*.zip
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/node_modules/*
 "let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 
 
