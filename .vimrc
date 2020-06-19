@@ -10,17 +10,19 @@ Plug 'vim-ruby/vim-ruby'
 Plug 'ajh17/spacegray.vim'
 Plug 'wincent/command-t'
 Plug 'Shougo/deoplete.nvim'
+Plug 'joukevandermaas/vim-ember-hbs'
 
 call plug#end()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 ""BASIC EDITING CONFIGURATION
 """"""""""""""""""""""""""""""""""""""""""""""""""
+colorscheme grb24bit
 colorscheme spacegray
 set nocompatible
 set termguicolors
 set background=dark
-set t_Co=256
+"set t_Co=256
 
 set hlsearch
 set hidden
@@ -127,8 +129,8 @@ endif
 inoremap <c-c> <esc>
 nnoremap <leader><space> :nohlsearch<cr>
 
-" Fast split navigation with <Ctrl> + hjkl
-:noremap <c-l> <c-w><c-l>
-:noremap <c-h> <c-w><c-h>
-:noremap <c-j> <c-w><c-j>
-:noremap <c-k> <c-w><c-k>
+noremap <c-l> <c-w><c-l>
+noremap <c-h> <c-w><c-h>
+noremap <c-j> <c-w><c-j>
+noremap <c-k> <c-w><c-k>
+inoremap <s-tab> <c-n>

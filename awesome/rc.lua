@@ -69,7 +69,7 @@ end
 
 -- ----------| Variable definitions |----------
 beautiful.init("/home/sceptrr/.config/awesome/themes/default/theme.lua")
-beautiful.get().wallpaper = "/media/hdd2/pics/wallhaven-oxe8op.jpg"
+beautiful.get().wallpaper = "/media/hdd2/pics/wallhaven-2evp8x.jpg"
 beautiful.awesome_icon = "/media/hdd2/pics/skull.svg"
 
 terminal = "termite"
@@ -328,8 +328,7 @@ awful.screen.connect_for_each_screen(
         -- Right widgets
         wibox.widget.systray(),
         -- how much time do you have
-        deadline_widget,
-        delimeter(),
+        -- delimeter(),
         -- free space on a disk
         widget_bash_info("diskfree", 60),
         delimeter(),
