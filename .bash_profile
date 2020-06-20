@@ -3,6 +3,7 @@
 #
 PATH="$PATH:$HOME/.local/bin"
 PATH="$PATH:$HOME/go/bin"
+PATH="$PATH:$HOME/bin"
 
 alias ls="ls --classify --tabsize=0 --group-directories-first --color=auto --human-readable --literal --show-control-chars"
 alias l="ls -lF --color=auto" # all files, in long format
@@ -80,12 +81,13 @@ symbol="→ "
 export PS1="\[${MAGENTA}\]\u \[$RESET\]in \[$MAGENTA\]\w\[$RESET\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")\[$PURPLE\]\$(parse_git_branch)\[$RESET\]\n$symbol\[$RESET\]"
 export PS2="\[$ORANGE\]→ \[$RESET\]"
 
-
 ### Misc
 
 # Only show the current directory's name in the tab
 export PROMPT_COMMAND='echo -ne "\033]0;${PWD##*/}\007"'
 
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx
 export GPG_TTY=$(tty)
+export PATH="$HOME/.rbenv/bin:$PATH"
+
+eval "$(rbenv init -)"
