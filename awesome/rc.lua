@@ -8,9 +8,7 @@ local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
 require("awful.hotkeys_popup.keys")
-local volume_module = require('volume-widget')
 
--- ----------| My widgets |----------
 local textbox = wibox.widget{
     align  = 'center',
     valign = 'center',
@@ -69,11 +67,11 @@ end
 
 -- ----------| Variable definitions |----------
 beautiful.init("/home/sceptrr/.config/awesome/themes/default/theme.lua")
-beautiful.get().wallpaper = "/media/hdd2/pics/wallhaven-2evp8x.jpg"
+--beautiful.get().wallpaper = "/media/hdd2/pics/wallhaven-2evp8x.jpg"
 beautiful.awesome_icon = "/media/hdd2/pics/skull.svg"
 
-terminal = "termite"
-editor = os.getenv("nvim") or "nano"
+terminal = "alacritty"
+editor = os.getenv("vim") or "nano"
 editor_cmd = terminal .. " -e " .. editor
 browser = "chromium"
 code_editor = "emacs"
@@ -142,18 +140,6 @@ mylauncher =
 
 -- ----------| Menubar configuration |----------
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
-
--- ----------| Deadline |----------
-start_time = os.time()
-end_time = os.time{year = 2020, month = 5, day = 31 }
-days_left = math.ceil((end_time - start_time) / (24 * 3600))
-
-deadline_widget = wibox.widget{
-  markup = ' <span color="'.. beautiful.xrdb.color4 .. '">Days left: '.. days_left..'</span>',
-  align = 'center',
-  valign = 'center',
-  widget = wibox.widget.textbox
-}
 
 -- ----------| Keyboard map indicator and switcher |----------
 local keyboard_icon = wibox.widget{
@@ -327,36 +313,9 @@ awful.screen.connect_for_each_screen(
       {
         -- Right widgets
         wibox.widget.systray(),
-        -- how much time do you have
-        -- delimeter(),
-        -- free space on a disk
-        widget_bash_info("diskfree", 60),
-        delimeter(),
         -- keyboard widget
         keyboard_icon,
         mykeyboardlayout,
-        delimeter(),
-        -- volume widget
-        volume_module.widget({
-          left = beautiful.dpi(0)
-        }),
-        volume_module.text_volume({
-          left = beautiful.dpi(0),
-          right = beautiful.dpi(0),
-          top = beautiful.dpi(0),
-          bottom = beautiful.dpi(0),
-        }),
-        delimeter(),
-        -- memory widget
-        widget_bash_info("mem", 1),
-        delimeter(),
-        -- cpu widget
-        widget_bash_info("cpu", 1),
-        delimeter(),
-        -- calendar and time widget
-        widget_bash_info("timeos", 60),
-        -- bad padding
-        wibox.widget.textbox(' '),
         layout = wibox.layout.fixed.horizontal,
       }
     }

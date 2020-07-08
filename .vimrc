@@ -17,10 +17,10 @@ call plug#end()
 """"""""""""""""""""""""""""""""""""""""""""""""""
 ""BASIC EDITING CONFIGURATION
 """"""""""""""""""""""""""""""""""""""""""""""""""
-colorscheme grb24bit
-colorscheme spacegray
+"colorscheme grb24bit
+"colorscheme spacegray
 set nocompatible
-set termguicolors
+"set termguicolors
 set background=dark
 "set t_Co=256
 
@@ -44,7 +44,7 @@ set incsearch
 set hlsearch
 " make searches case-sensitive only if they contain upper-case characters
 set ignorecase smartcase
-set cursorline
+"set cursorline
 set cmdheight=1
 set showtabline=2
 "set switchbuf=useopen
@@ -134,3 +134,18 @@ noremap <c-h> <c-w><c-h>
 noremap <c-j> <c-w><c-j>
 noremap <c-k> <c-w><c-k>
 inoremap <s-tab> <c-n>
+
+highlight Comment ctermbg=0 ctermfg=7
+highlight String ctermbg=0 ctermfg=6
+highlight Character ctermbg=0 ctermfg=3
+highlight Number ctermbg=0 ctermfg=1
+highlight Boolean ctermbg=0 ctermfg=1
+highlight Float ctermbg=0 ctermfg=1
+highlight Function ctermbg=0 ctermfg=4
+highlight Statement ctermbg=0 ctermfg=5
+highlight Operator ctermbg=0 ctermfg=5
+highlight Type ctermbg=0 ctermfg=5
+highlight PreProc ctermbg=0 ctermfg=5
+highlight Keyword ctermbg=0 ctermfg=6
+highlight LineNr ctermbg=0 ctermfg=7
+

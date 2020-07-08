@@ -51,7 +51,7 @@ theme.tasklist_disable_icon = true
 
 theme.xrdb = xrdb
 
-theme.tagNames = {"", "", "", "", "", "", "", "8", "9"}
+theme.tagNames = {"›", "2", "3", "4", "5", "6", "7", "8", "9"}
 theme.gap_single_client = false
 
 -- There are other variable sets
