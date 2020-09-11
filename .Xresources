@@ -1,17 +1,17 @@
 *fading: 0 
 *.cursorColor:  #c6c8d1
 
-*background: #0F111A
+*background: #111314
 *foreground: #8F93A2
 ! black
 *color0: #2C2F33
 *color8: #4B5056
 ! red
-*color1: #0F111A
-*color9: #0F111A
+*color1: #f56784
+*color9: #d05162
 ! green
-*color2: #99C794
-*color10: #99C794
+*color2: #91d689
+*color10: #91d689
 ! yellow
 *color3: #C4E88D
 *color11: #C4E88D
@@ -22,8 +22,8 @@
 *color5: #C792EA
 *color13: #C792EA
 ! cyan
-*color6: #89DDFF
-*color14: #89DDFF
+*color6: #72c1e0
+*color14: #72c1e0
 ! white
 *color7: #8F93A2
 *color15: #8F93A2

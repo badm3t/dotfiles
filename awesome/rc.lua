@@ -3,30 +3,235 @@ local gears = require("gears")
 local awful = require("awful")
 require("awful.autofocus")
 local wibox = require("wibox")
-local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
 require("awful.hotkeys_popup.keys")
+local beautiful = require("beautiful")
+local helpers = require("helpers")
 
-local textbox = wibox.widget{
-    align  = 'center',
-    valign = 'center',
-    widget = wibox.widget.textbox
+
+local themes = { "sensurri" }
+local theme = themes[1]
+
+local icon_themes = { "linebit", "drops" }
+local icon_theme = icon_themes[2]
+
+local bar_themes = { "sensurri" }
+local bar_theme = bar_themes[1]
+
+local notifications_themes = { "sensurri" }
+local notification_theme = notifications_themes[1]
+
+local sidebar_themes = { "sensurri" }
+local sidebar_theme = sidebar_themes[1]
+
+local xrdb = beautiful.xresources.get_current_theme()
+dpi = beautiful.xresources.apply_dpi
+
+require("demons")
+local ram_bar = require("elements.ram_bar")
+
+x = {
+    --           xrdb variable
+    background = xrdb.background,
+    foreground = xrdb.foreground,
+    color0     = xrdb.color0,
+    color1     = xrdb.color1,
+    color2     = xrdb.color2,
+    color3     = xrdb.color3,
+    color4     = xrdb.color4,
+    color5     = xrdb.color5,
+    color6     = xrdb.color6,
+    color7     = xrdb.color7,
+    color8     = xrdb.color8,
+    color9     = xrdb.color9,
+    color10    = xrdb.color10,
+    color11    = xrdb.color11,
+    color12    = xrdb.color12,
+    color13    = xrdb.color13,
+    color14    = xrdb.color14,
+    color15    = xrdb.color15,
 }
 
-local delimeter = function()
-  return wibox.widget{
-    widget = wibox.widget.textbox,
-    markup = '<span color="'..beautiful.xrdb.color8..'"> | </span>'
-  }
+user = {
+  terminal = "alacritty",
+  editor = os.getenv("vim"),
+  editor_cmd = "alacritty --class editor -e vim",
+  browser = "chromium",
+  modkey = "Mod4",
+  screen_shot = "maim -s | xclip -selection clipboard -t image/png",
+
+  dirs = {
+    downloads = os.getenv("XDG_DOWNLOAD_DIR") or "~/Downloads",
+    documents = os.getenv("XDG_DOCUMENTS_DIR") or "~/Documents",
+    music = os.getenv("XDG_MUSIC_DIR") or "~/Music",
+    pictures = os.getenv("XDG_PICTURES_DIR") or "~/Pictures",
+    videos = os.getenv("XDG_VIDEOS_DIR") or "~/Videos",
+    screenshots = os.getenv("XDG_SCREENSHOTR_DIR") or "~/Pictures/Screenshots",
+  },
+  lock_screen_custom_password = "awesome",
+}
+
+local commands = {
+  poweroff = function()
+    awful.spawn.with_shell("poweroff")
+  end,
+  reboot = function()
+    awful.spawn.with_shell("reboot")
+  end,
+}
+
+local apps = {}
+
+apps.browser = function ()
+    awful.spawn(user.browser, {switchtotag = true})
 end
 
-local function widget_bash_info(command, update_time)
-  return awful.widget.watch(command, update_time, function(widget, stdout)
-    widget:set_markup("<span color='"..beautiful.xrdb.color4.."'>"..stdout.."</span>")
-  end)
+local keybinds = {}
+
+local create_app_window = function()
+  local app_window = wibox{ visible = false, type = "dock", ontop = true }
+
+  return app_window
 end
+
+local poweroff_app = wibox{ visible = false, type = "dock", ontop = true }
+
+-- Last callback of stack
+local app_grabber
+
+local function hide_app_window(widget)
+  awful.keygrabber.stop(app_grabber)
+  --poweroff_app.visible = false
+  widget.visible = false
+end
+
+local function show_app_window(widget)
+  app_grabber = awful.keygrabber.run(function(_, key, event)
+    local invalid_key = false
+
+    if event == "release" then return end
+
+    if keybinds[key] then
+      keybinds[key]()
+    else
+      invalid_key = true
+    end
+
+    if not invalid_key or key == "Escape" then
+      hide_app_window(widget)
+    end
+  end)
+  --poweroff_app.visible = true
+  widget.visible = true
+end
+
+
+local theme_dir = os.getenv("HOME") .. "/.config/awesome/themes/" .. theme .. "/"
+beautiful.init(theme_dir .. "theme.lua")
+
+-- widgets
+--local calendar_widget = require("widgets.calendar_widget")
+--local calendar = helpers.create_boxed_widget(calendar_widget, dpi(350), dpi(340), x.color0)
+
+--local dashboard = wibox{ visible = true, type = "normal", ontop = true }
+--dashboard.bg = x.color0
+--dashboard.fg = x.color7
+--dashboard.width = dpi(350)
+--dashboard.height = dpi(340)
+--dashboard.class = "Dashboard"
+
+--dashboard:setup{
+ -- {
+  --  calendar,
+   -- layout = wibox.layout.flex.horizontal,
+  --},
+  --class_name = "Dashboard",
+  --layout = wibox.layout.flex.horizontal
+--}
+--awful.placement.top(dashboard)
+
+-- Right widgets/buttons/icons
+--local my_browser = helpers.create_button("", x.color4, x.color5, apps.browser, _)
+local volume = require("widgets.volume_widget")
+local poweroff_menu = helpers.create_button("", x.color4, x.color4, _, _)
+
+local reboot = helpers.create_button("", x.color5, x.color5, commands.reboot, _)
+reboot.font = "icomoon 40"
+reboot.forced_width = dpi(100)
+reboot.forced_height = dpi(100)
+
+local settings = helpers.create_button("", x.color5, x.color5, _, _)
+settings.font = "icomoon 40"
+settings.forced_width = dpi(100)
+settings.forced_height = dpi(100)
+
+local ram_widget = require("widgets.ram_widget")
+local cpu_widget = require("widgets.cpu2")
+
+local poweroff = helpers.create_button("", x.color5, x.color5, commands.poweroff, _)
+poweroff.font = "icomoon 40"
+poweroff.forced_width = dpi(100)
+poweroff.forced_height = dpi(100)
+
+-- Poweroff menu/wibox
+awful.placement.maximize(poweroff_app)
+
+poweroff_app.bg = x.background.."99"
+--poweroff_app.bg = "#00000000"
+poweroff_app.fg = x.foreground
+
+poweroff_menu:buttons(gears.table.join(
+  awful.button({}, awful.button.names.LEFT, function()
+    show_app_window(poweroff_app)
+  end),
+  awful.button({}, awful.button.names.MIDDLE, function()
+    hide_app_window(poweroff_app)
+  end)
+))
+
+
+local function create_stripe(widgets, bg)
+  local buttons = wibox.widget {
+    layout = wibox.layout.fixed.horizontal
+  }
+
+  for _, widget in ipairs(widgets) do
+    buttons:add(widget)
+  end
+
+  local stripe = wibox.widget {
+    {
+      nil,
+      {
+        nil,
+        buttons,
+        expand = "none",
+        layout = wibox.layout.align.horizontal
+      },
+      expand = "none",
+      layout = wibox.layout.align.vertical
+    },
+    bg = bg,
+    widget = wibox.container.background
+  }
+
+  return stripe
+end
+
+
+
+
+poweroff_app:setup {
+  {
+    create_stripe({reboot, settings, poweroff}, x.background.."44"),
+    layout = wibox.layout.flex.vertical
+  },
+  bg = x.background.."99",
+  widget = wibox.container.background
+}
+
 
 -- ----------| Error handling |----------
 -- Check if awesome encountered an error during startup and fell back to
@@ -65,10 +270,8 @@ do
   )
 end
 
--- ----------| Variable definitions |----------
-beautiful.init("/home/sceptrr/.config/awesome/themes/default/theme.lua")
---beautiful.get().wallpaper = "/media/hdd2/pics/wallhaven-2evp8x.jpg"
-beautiful.awesome_icon = "/media/hdd2/pics/skull.svg"
+beautiful.get().wallpaper = "/home/sceptrr/Downloads/gli.jpg"
+--beautiful.awesome_icon = "/media/hdd2/pics/skull.svg"
 
 terminal = "alacritty"
 editor = os.getenv("vim") or "nano"
@@ -118,8 +321,7 @@ myawesomemenu = {
   }
 }
 
-mymainmenu =
-  awful.menu(
+mymainmenu = awful.menu(
   {
     items = {
       {"awesome", myawesomemenu},
@@ -130,8 +332,7 @@ mymainmenu =
   }
 )
 
-mylauncher =
-  awful.widget.launcher(
+mylauncher = awful.widget.launcher(
   {
     image = beautiful.awesome_icon,
     menu = mymainmenu
@@ -143,7 +344,7 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 
 -- ----------| Keyboard map indicator and switcher |----------
 local keyboard_icon = wibox.widget{
-  markup = '<span color="'.. beautiful.xrdb.color4 .. '"></span>',
+  markup = '<',
   align  = 'center',
   valign = 'center',
   widget = wibox.widget.textbox
@@ -152,8 +353,7 @@ local keyboard_icon = wibox.widget{
 mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- Create a wibox for each screen and add it
-local taglist_buttons =
-  gears.table.join(
+local taglist_buttons = gears.table.join(
   awful.button({}, 1,
     function(t)
       t:view_only()
@@ -186,8 +386,7 @@ local taglist_buttons =
   )
 )
 
-local tasklist_buttons =
-  gears.table.join(
+local tasklist_buttons = gears.table.join(
   awful.button({}, 1,
     function(c)
       if c == client.focus then
@@ -229,6 +428,30 @@ end
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal("property::geometry", set_wallpaper)
 
+local update_taglist = function(item, tag, index)
+  if tag.selected then
+      item.markup = helpers.colorize_text(beautiful.taglist_text_focused[index], beautiful.taglist_text_color_focused[index])
+  elseif tag.urgent then
+      item.markup = helpers.colorize_text(beautiful.taglist_text_urgent[index], beautiful.taglist_text_color_urgent[index])
+  elseif #tag:clients() > 0 then
+      item.markup = helpers.colorize_text(beautiful.taglist_text_occupied[index], beautiful.taglist_text_color_occupied[index])
+  else
+      item.markup = helpers.colorize_text(beautiful.taglist_text_empty[index], beautiful.taglist_text_color_empty[index])
+  end
+end
+
+local update_taglist_img = function (item, tag, index)
+    if tag.selected then
+        item.image = beautiful.taglist_icons_focused[index]
+    elseif tag.urgent then
+        item.image = beautiful.taglist_icons_urgent[index]
+    elseif #tag:clients() > 0 then
+        item.image = beautiful.taglist_icons_occupied[index]
+    else
+        item.image = beautiful.taglist_icons_empty[index]
+    end
+end
+
 awful.screen.connect_for_each_screen(
   function(s)
     -- Wallpaper
@@ -248,77 +471,109 @@ awful.screen.connect_for_each_screen(
       l.floating
     }
 
-    awful.tag(beautiful.tagNames, s, layouts)
+    local tagnames = beautiful.tagnames or { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0" }
+
+    awful.tag(tagnames, s, layouts)
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
     -- Create an imagebox widget which will contain an icon indicating which layout we're using.
     -- We need one layoutbox per screen.
-        -- Create a taglist widget
-    s.mytaglist =
-      awful.widget.taglist {
+
+    -- Create a taglist widget
+    s.mytaglist = awful.widget.taglist {
       screen = s,
       filter = awful.widget.taglist.filter.all,
+      layout = wibox.layout.fixed.horizontal,
       buttons = taglist_buttons,
-      -- style = {spacing = 5},
       widget_template = {
-        {
-          {
-            {
-              {
-                id = "icon_role",
-                widget = wibox.widget.imagebox
-              },
-              margins = 2,
-              widget = wibox.container.margin
-            },
-            {
-              id = "text_role",
-              widget = wibox.widget.textbox,
-              --forced_width = 17,
-            },
-            layout = wibox.layout.fixed.horizontal
-          },
-          left = 13,
-          right = 15,
-          widget = wibox.container.margin
-        },
-        id = "background_role",
-        widget = wibox.container.background
+        widget = wibox.widget.textbox,
+        --widget = wibox.widget.imagebox,
+        create_callback = function(self, tag, index, _)
+          self.align = "center"
+          self.valign = "center"
+          self.forced_width = dpi(50)
+          self.font = beautiful.taglist_text_font
+
+          update_taglist(self, tag, index)
+        end,
+        update_callback = function(self, tag, index, _)
+          update_taglist(self, tag, index)
+        end,
       }
     }
 
     -- Create a tasklist widget
-    s.mytasklist =
-      awful.widget.tasklist {
+    s.mytasklist = awful.widget.tasklist {
       screen = s,
       filter = awful.widget.tasklist.filter.currenttags,
       buttons = tasklist_buttons
     }
 
+    -- Create clock
+    s.mytextclock = wibox.widget.textclock(
+      "<span color='"..x.foreground.."'> %a %b %d, %H:%M</span>"
+    )
+
+    s.mytextclock:buttons(gears.table.join(
+      awful.button({}, awful.button.names.LEFT, function()
+        --show_app_window(calendar_widget)
+      end),
+      awful.button({}, awful.button.names.MIDDLE, function()
+        --hide_app_window(calendar_widget)
+      end)
+    ))
+
     -- Create the wibox
-    s.mywibox = awful.wibar({position = "top", screen = s})
+    s.mywibox = awful.wibar({
+      position = "top",
+      screen = s,
+      bg = x.background,
+    })
+
+    local clock_icon = wibox.widget {
+      image = "/home/sceptrr/Downloads/sk.png",
+      widget = wibox.widget.imagebox,
+      forced_height = 37,
+      forced_width = 37
+    }
 
     -- Add widgets to the wibox
+    -- With this setup clock will be always in the middle
     s.mywibox:setup {
-      layout = wibox.layout.align.horizontal,
       {
-        -- Left widgets
-        layout = wibox.layout.fixed.horizontal,
-        --mylauncher,
-        s.mytaglist,
-        s.mypromptbox
+        layout = wibox.layout.align.horizontal,
+        {
+          -- Left widgets
+          layout = wibox.layout.fixed.horizontal,
+          s.mytaglist,
+          s.mypromptbox,
+        },
+        nil,
+        {
+          -- Right widgets
+          systray,
+          volume,
+          cpu_widget,
+          ram_widget,
+          poweroff_menu,
+          layout = wibox.layout.fixed.horizontal,
+        },
       },
-      s.mytasklist, -- Middle widget
+        -- Middle widget
       {
-        -- Right widgets
-        wibox.widget.systray(),
-        -- keyboard widget
-        keyboard_icon,
-        mykeyboardlayout,
-        layout = wibox.layout.fixed.horizontal,
-      }
+        layout = wibox.container.place,
+        valign = "center",
+        halign = "center",
+        {
+          layout = wibox.layout.fixed.horizontal,
+          clock_icon,
+          s.mytextclock
+        }
+      },
+      layout = wibox.layout.stack
     }
+
   end
 )
 -- }}}
@@ -335,6 +590,7 @@ root.buttons(
     ),
     awful.button({}, 4, awful.tag.viewnext),
     awful.button({}, 5, awful.tag.viewprev)
+    -- custom mouse bindings
   )
 )
 -- }}}
@@ -404,7 +660,7 @@ globalkeys = gears.table.join(
   ),
   awful.key({modkey, "Shift"}, "p", function()
     awful.util.spawn_with_shell(screen_shot) end, {}),
-  -- ---------- My programms START ----------
+  -- ---------- Custom keybindings ----------
   awful.key({modkey}, "c",
     function()
       awful.spawn(browser)
@@ -741,29 +997,30 @@ awful.rules.rules = {
     },
     properties = {floating = true}
   },
+  { rule = { class_name = "Dashboard" }, properties = { screen = 1, tag = beautiful.tagnames[9], maximized = false }},
   -- Set rules for my apps.
   { rule = { class = "Chromium" },
-    properties = { screen = 1, tag = beautiful.tagNames[2], maximized = false }
+    properties = { screen = 1, tag = beautiful.tagnames[2], maximized = false }
   },
   { rule = { class = "Firefox" },
-    properties = { screen = 1, tag = beautiful.tagNames[2], maximized = false }
+    properties = { screen = 1, tag = beautiful.tagnames[2], maximized = false }
   },
   { rule = { class = "Steam" },
-    properties = { screen = 1, tag = beautiful.tagNames[7], maximized = false }
+    properties = { screen = 1, tag = beautiful.tagnames[7], maximized = false }
   },
   { rule = { class = "Transmission" },
-    properties = { screen = 1, tag = beautiful.tagNames[6], maximized = false }
+    properties = { screen = 1, tag = beautiful.tagnames[6], maximized = false }
   },
   { rule = { class = "libreoffice" },
-    properties = { screen = 1, tag = beautiful.tagNames[6], maximized = false }
+    properties = { screen = 1, tag = beautiful.tagnames[6], maximized = false }
   },
   { rule = { class = "emacs" },
-    properties = { screen = 1, tag = beautiful.tagNames[1] }
+    properties = { screen = 1, tag = beautiful.tagnames[1] }
   },
    -- Add titlebars to normal clients and dialogs
   {
     rule_any = { type = { "normal", "dialog" }},
-    properties = { titlebars_enabled = false }
+    properties = { titlebars_enabled = beautiful.titlebars_enabled }
   }
 }
 -- }}}
@@ -791,8 +1048,7 @@ client.connect_signal(
   "request::titlebars",
   function(c)
     -- buttons for the titlebar
-    local buttons =
-      gears.table.join(
+    local buttons = gears.table.join(
       awful.button(
         {},
         1,
@@ -814,7 +1070,7 @@ client.connect_signal(
     awful.titlebar(c):setup {
       {
         -- Left
-        awful.titlebar.widget.iconwidget(c),
+        --awful.titlebar.widget.iconwidget(c),
         buttons = buttons,
         layout = wibox.layout.fixed.horizontal
       },

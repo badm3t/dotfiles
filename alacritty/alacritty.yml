@@ -171,25 +171,25 @@ font:
 schemes:
   dark_theme: &dark
     primary:
-        background: '#0F111A'
+        background: '#111314'
         foreground: '#8F93A2'
     normal:
-        black: '#0F111A'
-        red: '#FF5370'
+        black: '#2C2F33'
+        red: '#F37F97'
         green: '#99C794'
         yellow: '#C4E88D'
         blue: '#82AAFF'
         magenta: '#C792EA'
-        cyan: '#89DDFF'
+        cyan: '#72c1e0'
         white: '#464B5D'
     bright:
-        black: '#0F111A'
+        black: '#222222'
         red: '#FF5370'
         green: '#99C794'
         yellow: '#C4E88D'
         blue: '#82AAFF'
         magenta: '#C792EA'
-        cyan: '#89DDFF'
+        cyan: '#72c1e0'
         white: '#8F93A2'
 
 colors: *dark

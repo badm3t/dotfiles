@@ -11,18 +11,22 @@ Plug 'ajh17/spacegray.vim'
 Plug 'wincent/command-t'
 Plug 'Shougo/deoplete.nvim'
 Plug 'joukevandermaas/vim-ember-hbs'
+Plug 'tpope/vim-rbenv'
 
 call plug#end()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 ""BASIC EDITING CONFIGURATION
 """"""""""""""""""""""""""""""""""""""""""""""""""
-"colorscheme grb24bit
-"colorscheme spacegray
+colorscheme grb24bit
+colorscheme spacegray
 set nocompatible
-"set termguicolors
+set termguicolors
 set background=dark
-"set t_Co=256
+set t_Co=256
+
+"let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+"let &t_8b = "\<Esc>[48:2;%lu;%lu;%lum"
 
 set hlsearch
 set hidden
@@ -46,18 +50,19 @@ set hlsearch
 set ignorecase smartcase
 "set cursorline
 set cmdheight=1
-set showtabline=2
+"set showtabline=2
 "set switchbuf=useopen
 set shell=bash
 " Don't make backups at all
 set nobackup
-set directory=/tmp
-set backupdir=~/.vim/backups
+"set directory=/tmp
+"set backupdir=~/.vim/backups
 set scrolloff=3
 set backspace=indent,eol,start
 set wildmenu
 set wildmode=longest,list
 set showcmd 
+set title
 syntax on
 "Also load indent files, to automatically do language-dependent indenting.
 filetype plugin indent on
@@ -135,17 +140,17 @@ noremap <c-j> <c-w><c-j>
 noremap <c-k> <c-w><c-k>
 inoremap <s-tab> <c-n>
 
-highlight Comment ctermbg=0 ctermfg=7
-highlight String ctermbg=0 ctermfg=6
-highlight Character ctermbg=0 ctermfg=3
-highlight Number ctermbg=0 ctermfg=1
-highlight Boolean ctermbg=0 ctermfg=1
-highlight Float ctermbg=0 ctermfg=1
-highlight Function ctermbg=0 ctermfg=4
-highlight Statement ctermbg=0 ctermfg=5
-highlight Operator ctermbg=0 ctermfg=5
-highlight Type ctermbg=0 ctermfg=5
-highlight PreProc ctermbg=0 ctermfg=5
-highlight Keyword ctermbg=0 ctermfg=6
-highlight LineNr ctermbg=0 ctermfg=7
+"highlight Comment ctermbg=0 ctermfg=7
+"highlight String ctermbg=0 ctermfg=6
+"highlight Character ctermbg=0 ctermfg=3
+"highlight Number ctermbg=0 ctermfg=2
+"highlight Boolean ctermbg=0 ctermfg=1
+"highlight Float ctermbg=0 ctermfg=1
+"highlight Function ctermbg=0 ctermfg=4
+"highlight Statement ctermbg=0 ctermfg=5
+"highlight Operator ctermbg=0 ctermfg=5
+"highlight Type ctermbg=0 ctermfg=5
+"highlight PreProc ctermbg=0 ctermfg=5
+"highlight Keyword ctermbg=0 ctermfg=6
+"highlight LineNr ctermbg=0 ctermfg=7
 
