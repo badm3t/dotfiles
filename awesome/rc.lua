@@ -56,9 +56,9 @@ x = {
 
 user = {
   terminal = "alacritty",
-  editor = os.getenv("vim"),
-  editor_cmd = "alacritty --class editor -e vim",
-  browser = "chromium",
+  editor = os.getenv("nvim"),
+  editor_cmd = "alacritty --class editor -e nvim",
+  browser = "chromium --use-cmd-decoder=validating",
   modkey = "Mod4",
   screen_shot = "maim -s | xclip -selection clipboard -t image/png",
 
@@ -270,11 +270,11 @@ do
   )
 end
 
-beautiful.get().wallpaper = "/home/sceptrr/Downloads/gli.jpg"
+beautiful.get().wallpaper = "/home/rrize/dotfiles/awesome/bgbg.jpg"
 --beautiful.awesome_icon = "/media/hdd2/pics/skull.svg"
 
 terminal = "alacritty"
-editor = os.getenv("vim") or "nano"
+editor = os.getenv("nvim") or "nano"
 editor_cmd = terminal .. " -e " .. editor
 browser = "chromium"
 code_editor = "emacs"
@@ -488,13 +488,11 @@ awful.screen.connect_for_each_screen(
       buttons = taglist_buttons,
       widget_template = {
         widget = wibox.widget.textbox,
-        --widget = wibox.widget.imagebox,
         create_callback = function(self, tag, index, _)
           self.align = "center"
           self.valign = "center"
           self.forced_width = dpi(50)
           self.font = beautiful.taglist_text_font
-
           update_taglist(self, tag, index)
         end,
         update_callback = function(self, tag, index, _)
@@ -532,7 +530,7 @@ awful.screen.connect_for_each_screen(
     })
 
     local clock_icon = wibox.widget {
-      image = "/home/sceptrr/Downloads/sk.png",
+      image = "/home/rrize/Downloads/sk.png",
       widget = wibox.widget.imagebox,
       forced_height = 37,
       forced_width = 37
@@ -663,13 +661,13 @@ globalkeys = gears.table.join(
   -- ---------- Custom keybindings ----------
   awful.key({modkey}, "c",
     function()
-      awful.spawn(browser)
+      awful.spawn(user.browser)
     end,
     { description = "open a browser", group = "launcher" }
   ),
   awful.key({modkey}, "v",
     function()
-      awful.spawn(code_editor)
+      awful.spawn(user.editor_cmd)
     end,
     { description = "open a code editor", group = "launcher" }
   ),
@@ -686,11 +684,10 @@ globalkeys = gears.table.join(
     { description = "open steam", group = "launcher" }
   ),
 
-  -- ---------- My programms END ----------
   -- Standard program
   awful.key({modkey}, "Return",
     function()
-      awful.spawn(terminal)
+      awful.spawn(user.terminal)
     end,
     { description = "open a terminal", group = "launcher" }
   ),

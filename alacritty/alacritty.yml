@@ -181,9 +181,9 @@ schemes:
         blue: '#82AAFF'
         magenta: '#C792EA'
         cyan: '#72c1e0'
-        white: '#464B5D'
+        white: '#8F93A2'
     bright:
-        black: '#222222'
+        black: '#4B5056'
         red: '#FF5370'
         green: '#99C794'
         yellow: '#C4E88D'

@@ -7,7 +7,7 @@ local dpi = beautiful.xresources.apply_dpi
 local helpers = require("helpers")
 
 local cpu_widget = helpers.bar_widget(x.color3)
-cpu_widget.forced_width = dpi(80)
+cpu_widget.forced_width = dpi(100)
 
 awesome.connect_signal("demons::cpu", function(value)
     cpu_widget.markup = "Cpu: "..value.."%"

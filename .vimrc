@@ -4,29 +4,32 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rails'
-Plug 'lilydjwg/colorizer'
 " file finder
 Plug 'vim-ruby/vim-ruby'
 Plug 'ajh17/spacegray.vim'
 Plug 'wincent/command-t'
 Plug 'Shougo/deoplete.nvim'
-Plug 'joukevandermaas/vim-ember-hbs'
 Plug 'tpope/vim-rbenv'
+Plug 'chrisbra/Colorizer'
+Plug 'jonathanfilip/vim-lucius'
+Plug 'arcticicestudio/nord-vim'
 
 call plug#end()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 ""BASIC EDITING CONFIGURATION
 """"""""""""""""""""""""""""""""""""""""""""""""""
-colorscheme grb24bit
-colorscheme spacegray
 set nocompatible
 set termguicolors
 set background=dark
 set t_Co=256
+colorscheme nord
 
-"let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-"let &t_8b = "\<Esc>[48:2;%lu;%lu;%lum"
+":color grb-lucius
+"GrbLuciusDarkHighContrast
+
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48:2;%lu;%lu;%lum"
 
 set hlsearch
 set hidden

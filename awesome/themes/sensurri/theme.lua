@@ -23,7 +23,7 @@ local taglist_path = "/home/sceptrr/.config/awesome/themes/sensurri/taglist/"
 local theme = {}
 
 theme.dpi = dpi
-theme.font          = "Iosevka bold 12"
+theme.font          = "Fira Code 12"
 
 theme.bg_dark       = x.background
 theme.bg_normal     = x.background
@@ -49,8 +49,8 @@ theme.border_focus  = x.background
 theme.border_radius = dpi(6)
 
 -- Titlebars
-theme.titlebars_enabled = true
-theme.titlebar_size = dpi(35)
+theme.titlebars_enabled = false
+theme.titlebar_size = dpi(20)
 theme.titlebar_title_enabled = false
 theme.titlebar_font = "sans bold 9"
 theme.titlebar_title_align = "center"
@@ -101,7 +101,7 @@ theme.separator_fg = x.color8
 --Wibar(s)
 -- Deafult values
 theme.wibar_position = "bottom"
-theme.wibar_height = dpi(45)
+theme.wibar_height = dpi(40)
 theme.wibar_fg = x.foreground
 theme.wibar_bg = x.background
 theme.wibar_border_color = x.color0
@@ -169,10 +169,15 @@ end
 -- Noodle Text Taglist
 theme.taglist_text_font = "monospace 18"
 -- theme.taglist_text_font = "sans bold 15"
-theme.taglist_text_empty    = {"","","","","","","","","",""}
-theme.taglist_text_occupied = {"","","","","","","","","",""}
-theme.taglist_text_focused  = {"","","","","","","","","",""}
-theme.taglist_text_urgent   = {"","","","","","+","","+","+","+"}
+--theme.taglist_text_empty    = {"","","","","","","","","",""}
+--theme.taglist_text_occupied = {"","","","","","","","","",""}
+--theme.taglist_text_focused  = {"","","","","","","","","",""}
+--theme.taglist_text_urgent   = {"","","","","","+","+","+","+","+"}
+
+theme.taglist_text_empty    = {"","","","","","","","","",""}
+theme.taglist_text_occupied = {"","","","","","","","","",""}
+theme.taglist_text_focused  = {"","","","","","","","","",""}
+theme.taglist_text_urgent   = {"","","","","","+","","","",""}
 
 theme.taglist_text_color_empty  = {
     x.foreground.."22",

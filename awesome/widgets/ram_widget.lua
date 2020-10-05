@@ -4,7 +4,7 @@ local beautiful = require("beautiful")
 local helpers = require("helpers")
 
 local ram_widget = helpers.bar_widget(x.color3)
-ram_widget.forced_width = dpi(80)
+ram_widget.forced_width = dpi(100)
 
 local function update()
   mem = {}

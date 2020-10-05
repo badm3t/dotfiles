@@ -1,5 +1,5 @@
 *fading: 0 
-*.cursorColor:  #c6c8d1
+*.cursorColor:  #cacaca
 
 *background: #111314
 *foreground: #8F93A2
@@ -33,3 +33,5 @@ Xft.rgba:       rgb
 Xft.hinting:    true
 Xft.hintstyle:  hintslight
 Xft.dpi:        96.0
+
+

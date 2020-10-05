@@ -73,7 +73,7 @@ local function update()
     end)
 end
 
-helpers.widget_timer(update)
+helpers.widget_timer(update, 0.5)
 
 local volume_widget = wibox.widget{
   volume_icon,

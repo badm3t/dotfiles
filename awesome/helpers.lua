@@ -15,9 +15,10 @@ helpers.colorize_text = function(text, color)
 end
 
 
-helpers.widget_timer = function(callback)
+helpers.widget_timer = function(callback, timeout)
+  timeout = timeout or 0.5
   if callback then
-    timer = gears.timer({ timeout = 1 })
+    timer = gears.timer({ timeout = timeout })
     timer:start()
     timer:connect_signal("timeout", callback)
   end
